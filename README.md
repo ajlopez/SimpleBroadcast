@@ -51,7 +51,8 @@ npm test
 
 ## Samples
 
-TBD
+[Broadcast messages to many clients](https://github.com/ajlopez/SimpleBroadcast/tree/master/samples/Broadcast) sample shows
+how you send and receive messages to/from many clients thru a broadcast server.
 
 ## Contribution
 
