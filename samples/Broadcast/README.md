@@ -3,8 +3,6 @@
 A broadcast sample, one server, many clients. Each client repeats a message.
 
 ## Setup
-
-Via npm on Node:
 ```
 npm install simpleargs
 ```
@@ -12,8 +10,6 @@ npm install simpleargs
 ## Usage
 
 ### Server
-
-To launch the server
 ```
 node server.js
 ```
@@ -30,8 +26,6 @@ node server.js -p 4000
 ```
 
 ### Clients
-
-To launch a client
 ```
 node client.js [message]
 ```
@@ -39,9 +33,9 @@ If no arguments, the message is a `Hello, world`. It connects to localhost, port
 
 Options
 ```
--p, --port    Server Port, default 3000
--h, --host    Server Host, default localhost
--t, --timeout Timeout to repeat the message, default 1000
+-p, --port      Server Port, default 3000
+-h, --host      Server Host, default localhost
+-t, --timeout   Timeout (in milliseconds) to repeat the message, default 1000
 ```
 
 Examples
