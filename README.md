@@ -26,12 +26,6 @@ var server = simplebroadcast.createBroadcaster();
 server.listen(8000);
 ```
 
-Sending a message (any Javascript value that can be processed by JSON.stringify
-
-```js
-server.write(msg);
-```
-
 Client side
 
 ```js
