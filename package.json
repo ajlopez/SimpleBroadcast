@@ -1,0 +1,18 @@
+{ "name": "simplebroadcast"
+, "description": "Simple broadcasting and repeatign of JSON messages using net sockets"
+, "keywords": [ "message", "broadcast", "JSON", "socket", "nodejs" ]
+, "version": "0.0.1-alfa"
+, "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
+, "repository": { "type": "git", "url": "git://github.com/ajlopez/SimpleBroadcast.git" }
+, "main": "./lib/simplebroadcast.js"
+, "engines": { "node": ">= 0.6.0 && < 0.9.0" }
+, "scripts": {
+    "test": "nodeunit test"
+  }
+, "dependencies": {
+  }
+, "devDependencies": {
+	"simplemessages": "*",
+    "nodeunit": ">= 0.7.4"
+  }
+}
