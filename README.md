@@ -32,13 +32,15 @@ Client side
 var client = simplebroadcast.createClient();
 
 client.on('message', function(message) {
-	// message processing
+    // message processing
 });
 
 client.connect(port, host);
 
-// broadcasting a message
-client.write(msg);
+// broadcasting a message, after connection
+client.on('connect', function() {
+    client.write(msg);
+}
 
 ```
 
