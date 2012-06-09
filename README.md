@@ -5,13 +5,11 @@ Simple broadcasting and repeating of JSON messages using net sockets.
 ## Installation
 
 Via npm on Node:
-
 ```
 npm install simplebroadcast
 ```
 
 Reference it from your program:
-
 ```js
 var simplebroadcast = require('simplebroadcast');
 ```
@@ -19,7 +17,6 @@ var simplebroadcast = require('simplebroadcast');
 ## Usage
 
 Server side
-
 ```js
 var server = simplebroadcast.createBroadcaster();
 
@@ -27,7 +24,6 @@ server.listen(8000);
 ```
 
 Client side
-
 ```js
 var client = simplebroadcast.createClient();
 
