@@ -1,6 +1,6 @@
 # SimpleBroadcast
 
-Simple broadcasting and repeatign of JSON messages using net sockets.
+Simple broadcasting and repeating of JSON messages using net sockets.
 
 ## Installation
 
