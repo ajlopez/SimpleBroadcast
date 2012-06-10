@@ -35,7 +35,50 @@ exports['Broadcast Client to two Clients'] = function(test) {
     var server = simplebroadcast.createBroadcaster();
     
     server.listen(5000, 'localhost');
+
+    var clients = setupThreeClients(test, [server]);
+        
+    clients[1].connect(5000, 'localhost');
+    clients[2].connect(5000, 'localhost');
+    clients[0].connect(5000, 'localhost');
+}
+
+exports['Broadcast Client to two Clients using two Broadcasters'] = function(test) {
+    test.expect(6);
     
+    var server = simplebroadcast.createBroadcaster();
+    server.listen(5000, 'localhost');
+    var server2 = simplebroadcast.createBroadcaster();
+    server2.listen(5001, 'localhost');
+    
+    server.connect(5001, 'localhost');
+    
+    var clients = setupThreeClients(test, [server, server2]);
+        
+    clients[1].connect(5001, 'localhost');
+    clients[2].connect(5001, 'localhost');
+    clients[0].connect(5000, 'localhost');
+}
+
+exports['Broadcast Client to two Clients using two Broadcasters (Inverse)'] = function(test) {
+    test.expect(6);
+    
+    var server = simplebroadcast.createBroadcaster();
+    server.listen(5000, 'localhost');
+    var server2 = simplebroadcast.createBroadcaster();
+    server2.listen(5001, 'localhost');
+    
+    server.connect(5001, 'localhost');
+    
+    var clients = setupThreeClients(test, [server, server2]);
+        
+    clients[1].connect(5001, 'localhost');
+    clients[2].connect(5000, 'localhost');
+    clients[0].connect(5001, 'localhost');
+}
+
+function setupThreeClients(test, servers)
+{
     var client = simplebroadcast.createClient();
     var client2 = simplebroadcast.createClient();
     var client3 = simplebroadcast.createClient();
@@ -58,15 +101,12 @@ exports['Broadcast Client to two Clients'] = function(test) {
             client.end();
             client2.end();
             client3.end();
-            server.close();
+            servers.forEach(function(server) { server.close(); });
             test.done();
         }
         else
             test.equal(msg.name, "test");
     });
     
-    client2.connect(5000, 'localhost');
-    client3.connect(5000, 'localhost');
-    client.connect(5000, 'localhost');
+    return [client, client2, client3];
 }
-
