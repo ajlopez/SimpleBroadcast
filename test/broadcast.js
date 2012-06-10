@@ -1,16 +1,16 @@
 
 var simplebroadcast = require('../'),
-	net = require('net');
+    net = require('net');
 
 exports['Broadcast Client to one Client'] = function(test) {
     test.expect(2);
     
-	var server = simplebroadcast.createBroadcaster();
-	
-	server.listen(5000, 'localhost');
-	
-	var client = simplebroadcast.createClient();
-	var client2 = simplebroadcast.createClient();
+    var server = simplebroadcast.createBroadcaster();
+    
+    server.listen(5000, 'localhost');
+    
+    var client = simplebroadcast.createClient();
+    var client2 = simplebroadcast.createClient();
 
     client.on('connect', function() {
         client.write({ name: "test" });
@@ -32,13 +32,13 @@ exports['Broadcast Client to one Client'] = function(test) {
 exports['Broadcast Client to two Clients'] = function(test) {
     test.expect(6);
     
-	var server = simplebroadcast.createBroadcaster();
-	
-	server.listen(5000, 'localhost');
-	
-	var client = simplebroadcast.createClient();
-	var client2 = simplebroadcast.createClient();
-	var client3 = simplebroadcast.createClient();
+    var server = simplebroadcast.createBroadcaster();
+    
+    server.listen(5000, 'localhost');
+    
+    var client = simplebroadcast.createClient();
+    var client2 = simplebroadcast.createClient();
+    var client3 = simplebroadcast.createClient();
 
     client.on('connect', function() {
         client.write({ name: "test" });
