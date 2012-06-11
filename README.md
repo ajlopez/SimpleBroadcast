@@ -51,8 +51,8 @@ A broadcaster can act as a repeater, listening to other repeateres, or connectin
 broadcaster.listenRepeater(8001);
 broadcaster.connectRepeater(8002, 'repeater2');
 ```
-The messages sent by a repeater are broadcasted to all clients, but not to other repeaters. The messages sent by a client are broadcaster to the others clients and to all 
-repeaters. In this way, you can  build a graph of repeaters, including cycles. Usually it is an star graph were all repeaters are connectened to the others.
+The messages sent by a repeater are sent to all clients, but not to other repeaters. The messages sent by a client are sent to the others clients and to all 
+repeaters. In this way, you can  build a graph of repeaters, including cycles. Usually it is an star graph were each repeater is connected to all the others.
 
 ## Development
 
