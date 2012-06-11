@@ -16,11 +16,11 @@ var simplebroadcast = require('simplebroadcast');
 
 ## Usage
 
-Server side
+Broadcaster (server) side
 ```js
-var server = simplebroadcast.createBroadcaster();
+var broadcaster = simplebroadcast.createBroadcaster();
 
-server.listen(8000);
+broadcaster.listen(8000);
 ```
 
 Client side
@@ -39,6 +39,20 @@ client.on('connect', function() {
 }
 
 ```
+
+A broadcaster can connect to another broadcaster. Each one is the cliente of the other.
+```js
+broadcaster.connect(port, host));
+```
+You can build a tree of broacasters. A tree is a graph without cycles. If the graph of broadcasters has a cycle, you messages will be send forever.
+
+A broadcaster can act as a repeater, listening to other repeateres, or connecting as a repeater to another one.
+```js
+broadcaster.listenRepeater(8001);
+broadcaster.connectRepeater(8002, 'repeater2');
+```
+The messages sent by a repeater are broadcasted to all clients, but not to other repeaters. The messages sent by a client are broadcaster to the others clients and to all 
+repeaters. In this way, you can  build a graph of repeaters, including cycles. Usually it is an star graph were all repeaters are connectened to the others.
 
 ## Development
 
