@@ -4,6 +4,12 @@
 , "version": "0.0.1-beta"
 , "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
 , "repository": { "type": "git", "url": "git://github.com/ajlopez/SimpleBroadcast.git" }
+, "contributors": [
+  {
+    "name" : "Fernando Lores",
+    "email" : "ferlores@gmail.com"
+  }
+]
 , "main": "./lib/simplebroadcast.js"
 , "engines": { "node": ">= 0.6.0 && < 0.9.0" }
 , "scripts": {
