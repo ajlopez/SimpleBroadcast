@@ -2,11 +2,6 @@
 
 A broadcast sample, one server, many clients. Each client repeats a message.
 
-## Setup
-```
-npm install simpleargs
-```
-
 ## Usage
 
 ### Server

@@ -45,13 +45,13 @@ function setupThreeClients(test, servers)
     var client3 = simplebroadcast.createClient();
 
     client.on('connect', function() {
-        client.write({ name: "test" });
+        client.send({ name: "test" });
     });
     
     client2.on('message', function(msg) {
         test.ok(msg);
         test.equal(msg.name, "test");
-        client2.write({ name: "test2" });
+        client2.send({ name: "test2" });
     });
     
     client3.on('message', function(msg) {
