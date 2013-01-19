@@ -1,5 +1,6 @@
 
 var simplebroadcast = require('../../'),
+    net = require('net'),
     sargs = require('simpleargs');
     
 // Define command line arguments
@@ -10,23 +11,22 @@ sargs.define('p', 'port', 3000, 'Server port')
     
 // Process arguments
 var options = sargs.process(process.argv);
-    
-var client = simplebroadcast.createClient();
 
-client.on('connect', function() {
+var socket = net.connect(options.port, options.host);
+var client = simplebroadcast.createClient(socket);
+
+socket.on('connect', function() {
     run(client);
 });
 
-client.on('message', function(msg) {
+client.on('data', function(msg) {
     console.log(msg);
 });
-
-client.connect(options.port, options.host);
 
 function run(client) {
     var msg = (new Date()).toString() + ": " + options.message;
     console.log(msg);
-    client.send(msg);
+    client.write(msg);
     setTimeout(function() { run(client); }, options.timeout);
 }
 

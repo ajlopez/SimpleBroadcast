@@ -13,11 +13,7 @@ exports['Broadcast Client to two Clients using two Repeaters'] = function(test) 
     
     server.connectRepeater(5003, 'localhost');
     
-    var clients = setupThreeClients(test, [server, server2]);
-        
-    clients[1].connect(5001, 'localhost');
-    clients[2].connect(5001, 'localhost');
-    clients[0].connect(5000, 'localhost');
+    var clients = setupThreeClients(test, [server, server2], 5001, 'localhost');
 }
 
 exports['Broadcast Client to two Clients using two Repeaters (Inverse)'] = function(test) {
@@ -31,30 +27,38 @@ exports['Broadcast Client to two Clients using two Repeaters (Inverse)'] = funct
     
     server.connectRepeater(5003, 'localhost');
     
-    var clients = setupThreeClients(test, [server, server2]);
-        
-    clients[1].connect(5001, 'localhost');
-    clients[2].connect(5000, 'localhost');
-    clients[0].connect(5001, 'localhost');
+    var clients = setupThreeClients(test, [server, server2], 5001, 'localhost');
 }
 
-function setupThreeClients(test, servers)
+function setupThreeClients(test, servers, port, host)
 {
-    var client = simplebroadcast.createClient();
-    var client2 = simplebroadcast.createClient();
-    var client3 = simplebroadcast.createClient();
+    var socket = net.connect(port, host);
+    var client = simplebroadcast.createClient(socket);
+    var socket2 = net.connect(port, host);
+    var client2 = simplebroadcast.createClient(socket2);
+    var socket3 = net.connect(port, host);
+    var client3 = simplebroadcast.createClient(socket3);
 
-    client.on('connect', function() {
-        client.send({ name: "test" });
-    });
+    var connected = 0;
+
+    function connect() {
+        connected++;
+
+        if (connected === 3)
+            client.write({ name: 'test' });
+    }
+
+    socket.on('connect', connect);
+    socket2.on('connect', connect);
+    socket3.on('connect', connect);
     
-    client2.on('message', function(msg) {
+    client2.on('data', function(msg) {
         test.ok(msg);
         test.equal(msg.name, "test");
-        client2.send({ name: "test2" });
+        client2.write({ name: "test2" });
     });
     
-    client3.on('message', function(msg) {
+    client3.on('data', function(msg) {
         test.ok(msg);
         
         if (msg.name == "test2") {

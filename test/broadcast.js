@@ -8,15 +8,18 @@ exports['Broadcast Client to one Client'] = function(test) {
     var server = simplebroadcast.createBroadcaster();
     
     server.listen(5000, 'localhost');
-    
-    var client = simplebroadcast.createClient();
-    var client2 = simplebroadcast.createClient();
+    console.log('listen');
 
-    client.on('connect', function() {
-        client.send({ name: "test" });
+    var socket = net.connect(5000, 'localhost');
+    var client = simplebroadcast.createClient(socket);
+    var socket2 = net.connect(5000, 'localhost');
+    var client2 = simplebroadcast.createClient(socket2);
+
+    socket2.on('connect', function() {
+        client.write({ name: "test" });
     });
     
-    client2.on('message', function(msg) {
+    client2.on('data', function(msg) {
         test.ok(msg);
         test.equal(msg.name, "test");
         client.end();
@@ -24,9 +27,6 @@ exports['Broadcast Client to one Client'] = function(test) {
         server.close();
         test.done();
     });
-    
-    client2.connect(5000, 'localhost');
-    client.connect(5000, 'localhost');
 }
 
 exports['Broadcast Client to two Clients'] = function(test) {
@@ -36,11 +36,7 @@ exports['Broadcast Client to two Clients'] = function(test) {
     
     server.listen(5000, 'localhost');
 
-    var clients = setupThreeClients(test, [server]);
-        
-    clients[1].connect(5000, 'localhost');
-    clients[2].connect(5000, 'localhost');
-    clients[0].connect(5000, 'localhost');
+    var clients = setupThreeClients(test, [server], 5000, 'localhost');
 }
 
 exports['Broadcast Client to two Clients using two Broadcasters'] = function(test) {
@@ -53,11 +49,7 @@ exports['Broadcast Client to two Clients using two Broadcasters'] = function(tes
     
     server.connect(5001, 'localhost');
     
-    var clients = setupThreeClients(test, [server, server2]);
-        
-    clients[1].connect(5001, 'localhost');
-    clients[2].connect(5001, 'localhost');
-    clients[0].connect(5000, 'localhost');
+    var clients = setupThreeClients(test, [server, server2], 5001, 'localhost');
 }
 
 exports['Broadcast Client to two Clients using two Broadcasters (Inverse)'] = function(test) {
@@ -70,30 +62,38 @@ exports['Broadcast Client to two Clients using two Broadcasters (Inverse)'] = fu
     
     server.connect(5001, 'localhost');
     
-    var clients = setupThreeClients(test, [server, server2]);
-        
-    clients[1].connect(5001, 'localhost');
-    clients[2].connect(5000, 'localhost');
-    clients[0].connect(5001, 'localhost');
+    var clients = setupThreeClients(test, [server, server2], 5001, 'localhost');
 }
 
-function setupThreeClients(test, servers)
+function setupThreeClients(test, servers, port, host)
 {
-    var client = simplebroadcast.createClient();
-    var client2 = simplebroadcast.createClient();
-    var client3 = simplebroadcast.createClient();
+    var socket = net.connect(port, host);
+    var client = simplebroadcast.createClient(socket);
+    var socket2 = net.connect(port, host);
+    var client2 = simplebroadcast.createClient(socket2);
+    var socket3 = net.connect(port, host);
+    var client3 = simplebroadcast.createClient(socket3);
 
-    client.on('connect', function() {
-        client.send({ name: "test" });
-    });
+    var connected = 0;
+
+    function connect() {
+        connected++;
+
+        if (connected === 3)
+            client.write({ name: 'test' });
+    }
+
+    socket.on('connect', connect);
+    socket2.on('connect', connect);
+    socket3.on('connect', connect);
     
-    client2.on('message', function(msg) {
+    client2.on('data', function(msg) {
         test.ok(msg);
         test.equal(msg.name, "test");
-        client2.send({ name: "test2" });
+        client2.write({ name: "test2" });
     });
     
-    client3.on('message', function(msg) {
+    client3.on('data', function(msg) {
         test.ok(msg);
         
         if (msg.name == "test2") {
