@@ -68,6 +68,12 @@ npm test
 [Broadcast messages to many clients](https://github.com/ajlopez/SimpleBroadcast/tree/master/samples/Broadcast) sample shows
 how you send and receive messages to/from many clients thru a broadcast server.
 
+## Versions
+
+- 0.0.1: Published
+- 0.0.2: Published
+- 0.0.3: Updated to use SimpleMessages 0.3, in master, not published yet.
+
 ## Contribution
 
 Feel free to [file issues](https://github.com/ajlopez/SimpleBroadcast) and submit

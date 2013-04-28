@@ -10,10 +10,8 @@ node server.js
 ```
 It listens to port 3000.
 
-Options
-```
--p, --port    Port
-```
+Options:
+- `-p <port>`, `--port <port>`: Port to listen. Default value: 3000
 
 Example
 ```
@@ -26,16 +24,15 @@ node client.js [message]
 ```
 If no arguments, the message is a `Hello, world`. It connects to localhost, port 3000.
 
-Options
-```
--p, --port      Server Port, default 3000
--h, --host      Server Host, default localhost
--t, --timeout   Timeout (in milliseconds) to repeat the message, default 1000
-```
+Options:
+- `-h <host>`, `--host <host>`: Server host. Default value: localhost
+- `-p <port>`, `--port <port>`: Server port. Default value: 3000
+- `-t <timeout>`, `--timeout <timeout>`: Timeout between message, in milliseconds. Default value: 1000
 
-Examples
+Examples:
 ```
-node client.js hi
-node client.js hi -p 4000 -h myhost -t 100
+node client hi
+node client -p 3000 -h localhost hi
+node client --timeout 2000 hi
 ```
 
