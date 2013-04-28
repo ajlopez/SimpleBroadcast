@@ -72,7 +72,7 @@ how you send and receive messages to/from many clients thru a broadcast server.
 
 - 0.0.1: Published
 - 0.0.2: Published
-- 0.0.3: Updated to use SimpleMessages 0.3, in master, not published yet.
+- 0.0.3: Published, updated to use SimpleMessages 0.4. Adding error event to client in code.
 
 ## Contribution
 
